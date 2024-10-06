@@ -3,6 +3,7 @@
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "packages/wx-server/src",
   "projectType": "application",
+  "type": "module",
   "tags": [],
   "targets": {
     "build": {
