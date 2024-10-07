@@ -36,6 +36,4 @@ app.use(async (ctx) => {
 });
 app.listen(port, host, () => {
   console.log(`Listening on ${protocol}://${host}:${port}`);
-  console.log(`EPS_GZH_APP_ID:  ${process.env.EPS_GZH_APP_ID}`);
-  console.log(`EPS_GZH_APP_SECRET:  ${process.env.EPS_GZH_APP_SECRET}`);
 });

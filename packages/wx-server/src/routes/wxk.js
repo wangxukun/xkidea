@@ -43,14 +43,10 @@ export default async function wxk(ctx) {
 
   // 比较生成的 hashcode 和请求中的 signature，如果相等，返回 echostr，表示验证成功
   if (hashcode === signature) {
-    console.log('hashcode:', hashcode);
-    console.log('signature:', signature);
     // 返回 echostr 给微信服务器，表示验证通过
     ctx.body = echostr;
   } else {
     // 如果不匹配，返回空字符串，表示验证失败
-    console.log('hashcode:', hashcode);
-    console.log('signature:', signature);
     ctx.body = '';
   }
 }
