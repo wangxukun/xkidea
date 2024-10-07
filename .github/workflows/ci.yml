@@ -72,8 +72,8 @@ jobs:
             rm -rf wx-server/dist
             rm wx-server.zip
 
-      # 9. 通过 SSH 登录到 ECS 服务器设置环境变量
-      - name: SSH and set env
+      # 9. 安装依赖和启动服务器
+      - name: Install dependencies on ECS
         uses: appleboy/ssh-action@v0.1.4
         with:
           host: ${{ secrets.WXKZD_ECS_HOST }}
@@ -84,16 +84,7 @@ jobs:
             # 设置环境变量
             sudo sh -c 'rm -f /etc/sysconfig/eps-gzh.conf && printf "EPS_GZH_APP_HOST=${{ secrets.EPS_GZH_APP_HOST }}\nEPS_GZH_APP_ID=${{ secrets.EPS_GZH_APP_ID }}\nEPS_GZH_APP_SECRET=${{ secrets.EPS_GZH_APP_SECRET }}\n" > /etc/sysconfig/eps-gzh.conf && chmod 644 /etc/sysconfig/eps-gzh.conf'
             source /etc/sysconfig/eps-gzh.conf
-
-      # 10. 安装依赖和启动服务器
-      - name: Install dependencies on ECS
-        uses: appleboy/ssh-action@v0.1.4
-        with:
-          host: ${{ secrets.WXKZD_ECS_HOST }}
-          username: ${{ secrets.WXKZD_SSH_USERNAME }}
-          key: ${{ secrets.WXKZD_SSH_PRIVATE_KEY }}
-          port: 22
-          script: |
+            # 安装依赖
             cd /root/wx-server
             npm install
             # 启动或重启应用
