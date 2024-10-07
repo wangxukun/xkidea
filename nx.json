@@ -1,7 +1,4 @@
 {
-  "extends": "nx/presets/npm.json",
-  "$schema": "./node_modules/nx/schemas/nx-schema.json",
-  "defaultBase": "master",
   "installation": {
     "version": "19.8.4",
     "plugins": {
