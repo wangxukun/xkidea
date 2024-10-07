@@ -86,9 +86,6 @@ jobs:
             npm install
             # 启动或重启应用
             pm2 startOrReload ../conf/ecosystem.config.js
-            pm2 set EPS_GZH_APP_HOST ${{ secrets.EPS_GZH_APP_HOST }}
-            pm2 set EPS_GZH_APP_ID ${{ secrets.EPS_GZH_APP_ID }}
-            pm2 set EPS_GZH_APP_SECRET ${{ secrets.EPS_GZH_APP_SECRET }}
 
       # 处理异常和错误的工作流步骤
       - name: Handle errors
