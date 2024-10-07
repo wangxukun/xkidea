@@ -41,7 +41,7 @@
     "copy-public": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "node apps/wx-server/copyPublic.js"
+        "command": "node packages/wx-server/copyPublic.js"
       }
     },
     "serve": {
