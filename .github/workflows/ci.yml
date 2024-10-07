@@ -42,7 +42,7 @@ jobs:
 
       # 6. 压缩项目文件以便传输到服务器
       - name: Compress project files
-        run: zip -r wx-server.zip dist/apps/wx-server/*
+        run: zip -r wx-server.zip dist/packages/wx-server/*
 
       # 7. 通过 SSH 将项目文件上传到阿里云 ECS 服务器
       - name: Upload project to ECS
@@ -68,7 +68,7 @@ jobs:
             rm -rf /root/wx-server/*
             cd /root
             unzip wx-server.zip -d wx-server
-            mv wx-server/dist/apps/wx-server/* wx-server/
+            mv wx-server/dist/packages/wx-server/* wx-server/
             rm -rf wx-server/dist
             rm wx-server.zip
 
