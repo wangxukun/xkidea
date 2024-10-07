@@ -55,7 +55,7 @@ jobs:
           source: 'wx-server.zip'
           target: '/root' # 目标目录
 
-      # 8. 通过 SSH 登录到 ECS 服务器解压文件并设置环境变量
+      # 8. 通过 SSH 登录到 ECS 服务器解压文件
       - name: SSH and deploy
         uses: appleboy/ssh-action@v0.1.4
         with:
@@ -71,12 +71,22 @@ jobs:
             mv wx-server/dist/packages/wx-server/* wx-server/
             rm -rf wx-server/dist
             rm wx-server.zip
-            # 设置环境变量
-            export EPS_GZH_APP_HOST=${{secrets.EPS_GZH_APP_HOST}}
-            export EPS_GZH_APP_ID=${{secrets.EPS_GZH_APP_ID}}
-            export EPS_GZH_APP_SECRET=${{secrets.EPS_GZH_APP_SECRET}}
 
-      # 9. 安装依赖和启动服务器
+      # 9. 通过 SSH 登录到 ECS 服务器设置环境变量
+      - name: SSH and set env
+        uses: appleboy/ssh-action@v0.1.4
+        with:
+          host: ${{ secrets.WXKZD_ECS_HOST }}
+          username: ${{ secrets.WXKZD_SSH_USERNAME }}
+          key: ${{ secrets.WXKZD_SSH_PRIVATE_KEY }}
+          port: 22
+          script: |
+            # 设置环境变量
+            export EPS_GZH_APP_HOST=${{ secrets.EPS_GZH_APP_HOST }}
+            export EPS_GZH_APP_ID=${{ secrets.EPS_GZH_APP_ID }}
+            export EPS_GZH_APP_SECRET=${{ secrets.EPS_GZH_APP_SECRET }}
+
+      # 10. 安装依赖和启动服务器
       - name: Install dependencies on ECS
         uses: appleboy/ssh-action@v0.1.4
         with:
