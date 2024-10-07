@@ -81,14 +81,14 @@ jobs:
           key: ${{ secrets.WXKZD_SSH_PRIVATE_KEY }}
           port: 22
           script: |
-            # 设置环境变量
-            sudo sh -c 'rm -f /etc/sysconfig/eps-gzh.conf && printf "EPS_GZH_APP_HOST=${{ secrets.EPS_GZH_APP_HOST }}\nEPS_GZH_APP_ID=${{ secrets.EPS_GZH_APP_ID }}\nEPS_GZH_APP_SECRET=${{ secrets.EPS_GZH_APP_SECRET }}\n" > /etc/sysconfig/eps-gzh.conf && chmod 644 /etc/sysconfig/eps-gzh.conf'
-            source /etc/sysconfig/eps-gzh.conf
             # 安装依赖
             cd /root/wx-server
             npm install
             # 启动或重启应用
             pm2 startOrReload ../conf/ecosystem.config.js
+            pm2 set EPS_GZH_APP_HOST ${{ secrets.EPS_GZH_APP_HOST }}
+            pm2 set EPS_GZH_APP_ID ${{ secrets.EPS_GZH_APP_ID }}
+            pm2 set EPS_GZH_APP_SECRET ${{ secrets.EPS_GZH_APP_SECRET }}
 
       # 处理异常和错误的工作流步骤
       - name: Handle errors
