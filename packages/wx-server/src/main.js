@@ -1,15 +1,39 @@
 import koa from 'koa';
+import cores from 'koa2-cors';
+import serve from 'koa-static';
+import logger from 'koa-logger';
+import bodyParser from 'koa-bodyparser';
+require('dotenv').config();
+import router from './routes';
 
 const protocol = 'http';
-const host = process.env.HOST ?? 'localhost';
-// const host = process.env.HOST ?? '0.0.0.0';
+const host = process.env.EPS_GZH_APP_HOST ?? 'localhost';
 const port = process.env.PORT ? Number(process.env.PORT) : 80;
 
+const publicFiles = serve('./public');
+
+// initial
 const app = new koa();
+
+// enable logger
+app.use(logger());
+
+// enable bodyParser
+app.use(bodyParser());
+
+// enable cores
+app.use(cores());
+
+// enable koa-static middleware
+app.use(publicFiles);
+
+// enable routing
+app.use(router.routes());
+app.use(router.allowedMethods());
 
 app.use(async (ctx) => {
   ctx.body = { message: 'Hello API' };
 });
 app.listen(port, host, () => {
-  console.log(`[ ready ] ${protocol}://${host}:${port}`);
+  console.log(`Listening on ${protocol}://${host}:${port}`);
 });

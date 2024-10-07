@@ -38,6 +38,12 @@
         }
       }
     },
+    "copy-public": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "node apps/wx-server/copyPublic.js"
+      }
+    },
     "serve": {
       "executor": "@nx/js:node",
       "defaultConfiguration": "development",
