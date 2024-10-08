@@ -81,8 +81,7 @@ jobs:
           key: ${{ secrets.WXKZD_SSH_PRIVATE_KEY }}
           port: 22
           script: |
-            sudo sh -c 'rm -f /etc/profile.d/eps-gzh.sh && printf "export EPS_GZH_APP_HOST=${{ secrets.EPS_GZH_APP_HOST }}\nexport EPS_GZH_APP_ID=${{ secrets.EPS_GZH_APP_ID }}\nexport EPS_GZH_APP_SECRET=${{ secrets.EPS_GZH_APP_SECRET }}\n" > /etc/profile.d/eps-gzh.sh'
-
+            sudo sh -c 'rm -f /etc/profile.d/eps-gzh.sh && printf "export EPS_GZH_APP_HOST=${{ secrets.EPS_GZH_APP_HOST }}\nexport EPS_GZH_APP_ID=${{ secrets.EPS_GZH_APP_ID }}\nexport EPS_GZH_APP_SECRET=${{ secrets.EPS_GZH_APP_SECRET }}\nexport EPS_GZH_APP_DATABASE_URL=${{ secrets.EPS_GZH_APP_DATABASE_URL }}\n" > /etc/profile.d/eps-gzh.sh'
       # 10. 安装依赖和启动服务器
       - name: Install dependencies on ECS
         uses: appleboy/ssh-action@v0.1.4
