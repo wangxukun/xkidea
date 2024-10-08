@@ -6,6 +6,9 @@ import bodyParser from 'koa-bodyparser';
 require('dotenv').config();
 import router from './routes';
 
+// connection database
+const db = require('./db/connect');
+
 const protocol = 'http';
 const host = process.env.EPS_GZH_APP_HOST ?? 'localhost';
 const port = process.env.PORT ? Number(process.env.PORT) : 80;
