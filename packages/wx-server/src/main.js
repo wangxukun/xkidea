@@ -1,3 +1,5 @@
+import https from 'https';
+import fs from 'fs';
 import koa from 'koa';
 import cores from 'koa2-cors';
 import serve from 'koa-static';
@@ -9,11 +11,16 @@ import router from './routes';
 // connection database
 const db = require('./db/connect');
 
-const protocol = 'http';
+const protocol = 'https';
 const host = process.env.EPS_GZH_APP_HOST ?? 'localhost';
-const port = process.env.PORT ? Number(process.env.PORT) : 80;
+const port = process.env.PORT ? Number(process.env.PORT) : 443;
 
 const publicFiles = serve('./public');
+
+const options = {
+  key: fs.readFileSync(process.env.SSL_KEY),
+  cert: fs.readFileSync(process.env.SSL_PEM),
+};
 
 // initial
 const app = new koa();
@@ -37,6 +44,12 @@ app.use(router.allowedMethods());
 app.use(async (ctx) => {
   ctx.body = { message: 'Hello API' };
 });
-app.listen(port, host, () => {
+
+// app.listen(port, host, () => {
+//   console.log(`Listening on ${protocol}://${host}:${port}`);
+// });
+
+const server = https.createServer(options, app.callback());
+server.listen(port, host, () => {
   console.log(`Listening on ${protocol}://${host}:${port}`);
 });
