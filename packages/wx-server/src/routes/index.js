@@ -1,6 +1,7 @@
 import Router from 'koa-router';
 import wxk from './wxk';
 import signJsapi from './signJsapi';
+import login from './login';
 const UserModel = require('../db/models/UserModel');
 
 const router = new Router();
@@ -25,5 +26,8 @@ router.post('/reg', function (ext) {
       };
     });
 });
+
+// 微信小程序登录接口
+router.post('/login', login);
 
 export default router;
