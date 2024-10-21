@@ -1,8 +1,9 @@
 const axios = require('axios');
-// const jwt = require('jsonwebtoken');
+const jwt = require('jsonwebtoken');
 
 const APPID = process.env.EPS_MINI_APP_ID; // 微信小程序的 AppID
 const SECRET = process.env.EPS_MINI_APP_SECRET; // 微信小程序的 AppSecret
+const JWT_SECRET = process.env.EPS_MINI_APP_JWT_SECRET; // JWT密钥
 
 // 登录接口
 export default async function login(ctx) {
@@ -32,12 +33,11 @@ export default async function login(ctx) {
 
     if (openid) {
       // 生成 JWT Token
-      // const token = jwt.sign({ openid }, JWT_SECRET, { expiresIn: '7d' });
+      const token = jwt.sign({ openid }, JWT_SECRET, { expiresIn: '7d' });
 
       // 返回 token 给前端
       ctx.body = {
-        // token,
-        openid,
+        token,
       };
     } else {
       ctx.status = 400;
