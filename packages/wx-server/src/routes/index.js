@@ -1,7 +1,7 @@
 import Router from 'koa-router';
 import wxk from './wxk';
 import signJsapi from './signJsapi';
-import login from './login';
+import loginwx from '../api/./loginwx';
 import banners from '../api/banners';
 const UserModel = require('../db/models/UserModel');
 
@@ -28,8 +28,8 @@ router.post('/reg', function (ext) {
     });
 });
 
-// 微信小程序登录接口
-router.post('/login', login);
+// 微信小程序用户登录接口
+router.post('/loginwx', loginwx);
 
 // 微信小程序首页：轮播图接口
 router.get('/api/banners', banners);
