@@ -60,7 +60,7 @@ export default function banners(ctx) {
   ];
   ctx.body = {
     code: 0,
+    message: '获取轮播图数据功能',
     data: banners,
-    message: 'success',
   };
 }

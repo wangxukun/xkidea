@@ -1,15 +1,17 @@
 import Router from 'koa-router';
-import wxk from './wxk';
-import signJsapi from './signJsapi';
-import loginwx from '../api/./loginwx';
-import banners from '../api/banners';
+import wxk from '../api/wechat/wxk';
+import signJsapi from '../api/wechat/signJsapi';
+import login from '../api/wxapp/login';
+import banners from '../api/wxapp/banners';
 const UserModel = require('../db/models/UserModel');
 
 const router = new Router();
 
 // enable routing
-router.get('/wxk', wxk);
-router.get('/jsapi', signJsapi);
+// 微信公众号服务器主地址，能够正确响应微信发送的token验证
+router.get('/api/wechat/wxk', wxk);
+
+router.get('/api/wechat/jsapi', signJsapi);
 
 // test mongodb save data
 router.post('/reg', function (ext) {
@@ -29,9 +31,9 @@ router.post('/reg', function (ext) {
 });
 
 // 微信小程序用户登录接口
-router.post('/loginwx', loginwx);
+router.post('/api/wxapp/login', login);
 
 // 微信小程序首页：轮播图接口
-router.get('/api/banners', banners);
+router.get('/api/wxapp/banners', banners);
 
 export default router;

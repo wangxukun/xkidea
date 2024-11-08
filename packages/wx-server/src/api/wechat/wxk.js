@@ -1,3 +1,7 @@
+/**
+ * 微信公众号服务器主地址，能够正确响应微信发送的token验证
+ */
+
 // 导入 Node.js 内置的加密模块 'crypto'
 import * as crypto from 'crypto';
 
