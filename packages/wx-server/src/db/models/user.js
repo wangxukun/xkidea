@@ -3,6 +3,12 @@ const mongoose = require('mongoose');
 
 // 定义用户模型的架构
 const userSchema = new mongoose.Schema({
+  // 用户在开发平台的唯一标识符，必须，且需唯一，若当前小程序已绑定到微信开放平台账号下会返回
+  unionid: {
+    type: String,
+    required: true,
+    unique: true,
+  },
   // 用户的唯一标识符，必须，且需唯一
   openid: {
     type: String,
@@ -13,11 +19,13 @@ const userSchema = new mongoose.Schema({
   nickName: {
     type: String,
     required: true,
+    default: '微信用户',
   },
   // 用户头像 URL，必须
   avatarUrl: {
     type: String,
     required: true,
+    default: '/images/avatar.png',
   },
   // 学习统计信息
   studyStats: {
