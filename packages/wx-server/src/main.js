@@ -11,7 +11,7 @@ import router from './routes';
 // connection database
 const db = require('./db/connect');
 
-const protocol = 'https';
+const protocol = 'http';
 const host = process.env.EPS_GZH_APP_HOST ?? 'localhost';
 const port = process.env.EPS_GZH_APP_POST
   ? Number(process.env.EPS_GZH_APP_POST)
