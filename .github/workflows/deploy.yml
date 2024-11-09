@@ -57,7 +57,7 @@ jobs:
           key: ${{ secrets.WXKZD_SSH_PRIVATE_KEY }} # 私钥，用于 SSH 登录
           port: 22
           source: 'wx-client.zip'
-          target: '/root' # 目标目录
+          target: '/var/www' # 目标目录
 
       # 7. 通过 SSH 将wx-server项目文件上传到阿里云 ECS 服务器
       - name: Upload project to ECS
@@ -68,7 +68,7 @@ jobs:
           key: ${{ secrets.WXKZD_SSH_PRIVATE_KEY }} # 私钥，用于 SSH 登录
           port: 22
           source: 'wx-server.zip'
-          target: '/root' # 目标目录
+          target: '/var/www' # 目标目录
 
       # 8. 通过 SSH 登录到 ECS 服务器解压文件
       - name: SSH and deploy
@@ -81,17 +81,20 @@ jobs:
           script: |
             # 处理wx-client.zip文件
             # 清除旧代码
-            rm -rf /root/wx-client/*
-            cd /root
+            rm -rf /var/www/wx-client/*
+            cd /var/www
             unzip wx-client.zip -d wx-client
             mv wx-client/dist/packages/wx-client/* wx-client/
             rm -rf wx-client/dist
             rm wx-client.zip
+            # 设置nginx用户有权限
+            chown -R nginx:nginx /var/www/wx-client 
+            chmod -R 755 /var/www/wx-client
 
             # 处理wx-server.zip文件
             # 清除旧代码
-            rm -rf /root/wx-server/*
-            cd /root
+            rm -rf /var/www/wx-server/*
+            cd /var/www
             unzip wx-server.zip -d wx-server
             mv wx-server/dist/packages/wx-server/* wx-server/
             rm -rf wx-server/dist
@@ -107,7 +110,7 @@ jobs:
           port: 22
           script: |
             # 安装依赖
-            cd /root/wx-server
+            cd /var/www/wx-server
             npm install
             # 启动或重启应用
             pm2 startOrReload ../conf/ecosystem.config.js
