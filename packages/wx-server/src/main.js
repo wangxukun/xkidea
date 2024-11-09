@@ -11,7 +11,7 @@ import router from './routes';
 // connection database
 const db = require('./db/connect');
 
-const protocol = 'http';
+const protocol = 'https';
 const host = process.env.EPS_GZH_APP_HOST ?? 'localhost';
 const port = process.env.EPS_GZH_APP_POST
   ? Number(process.env.EPS_GZH_APP_POST)
@@ -46,10 +46,6 @@ app.use(router.allowedMethods());
 app.use(async (ctx) => {
   ctx.body = { message: 'Hello API' };
 });
-
-// app.listen(port, host, () => {
-//   console.log(`Listening on ${protocol}://${host}:${port}`);
-// });
 
 const server = https.createServer(options, app.callback());
 server.listen(port, host, () => {
