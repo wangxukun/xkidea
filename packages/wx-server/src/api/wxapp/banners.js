@@ -11,6 +11,7 @@ const config = {
   bucket: 'wxkzd',
 };
 
+// OOS对象存储服务器中的文件ID
 const objects = [
   'wx-server/miniprogram/images/banners/banner1.png',
   'wx-server/miniprogram/images/banners/banner2.png',
