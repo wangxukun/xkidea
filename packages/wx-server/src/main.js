@@ -47,6 +47,10 @@ app.use(async (ctx) => {
   ctx.body = { message: 'Hello API' };
 });
 
+// app.listen(port, host, () => {
+//   console.log(`Listening on ${protocol}://${host}:${port}`);
+// });
+
 const server = https.createServer(options, app.callback());
 server.listen(port, host, () => {
   console.log(`Listening on ${protocol}://${host}:${port}`);
