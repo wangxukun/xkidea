@@ -13,6 +13,12 @@ export default async function wxk(ctx) {
   // 定义公众平台的 token，这个 token 应该和你在微信公众平台基本配置中的 token 一致
   const token = 'id0wxk9english';
 
+  console.log('----------------');
+  console.log('token', token);
+  console.log('----------------');
+  console.log(query);
+  console.log('----------------');
+
   // 判断查询参数中是否缺少 signature, timestamp, nonce, 或 echostr，如果缺少任意一个参数，返回一个默认的文本响应
   if (!query.signature || !query.timestamp || !query.nonce || !query.echostr) {
     // 响应内容：简单的文本提示，表明这是 handle view 的响应
