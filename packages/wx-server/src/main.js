@@ -34,11 +34,7 @@ app.use(logger());
 app.use(bodyParser());
 
 // enable cores
-app.use(
-  cores({
-    origin: '*',
-  })
-);
+app.use(cores());
 
 // enable koa-static middleware
 app.use(publicFiles);
