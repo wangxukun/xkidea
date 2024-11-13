@@ -3,10 +3,12 @@ import * as ReactDOM from 'react-dom/client';
 import App from './app/app';
 import wxconfig from './wechat/wxconfig';
 
-const initializeApp = () => {
+async function initializeApp() {
   // TODO: initialize app
-  wxconfig();
-};
+  await wxconfig();
+}
+
+initializeApp();
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

@@ -13,6 +13,7 @@ function scanCode() {
     },
   });
 }
+
 export function App() {
   return <Button onClick={scanCode}>Hello wechat</Button>;
 }
