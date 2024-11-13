@@ -10,7 +10,7 @@ const jsapiTicketModel = require('../../db/models/JsapiTicketModel');
 
 async function getAccess_token(appId, appSecret) {
   let access_token = '';
-  const access_token_data = await accessTokenModel().find();
+  const access_token_data = await accessTokenModel.find();
   if (access_token_data.length > 0) {
     // Check if the access_token already exists in the db.
     const t = new Date().getTime() - access_token_data[0].token_time;
@@ -55,7 +55,7 @@ async function getAccess_token(appId, appSecret) {
 
 async function getJsapi_ticket(access_token) {
   let jsapi_ticket = '';
-  const jsapi_ticket_data = await jsapiTicketModel().find();
+  const jsapi_ticket_data = await jsapiTicketModel.find();
   if (jsapi_ticket_data.length > 0) {
     // Check if the jsapi_ticket already exists in the db.
     const t = new Date().getTime() - jsapi_ticket_data[0].ticket_time;
