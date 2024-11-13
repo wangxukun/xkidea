@@ -74,6 +74,7 @@
     "react": "18.3.1",
     "react-dom": "18.3.1",
     "react-weui": "^1.2.3",
+    "weixin-js-sdk": "^1.6.5",
     "weui": "^1.1.0"
   }
 }
