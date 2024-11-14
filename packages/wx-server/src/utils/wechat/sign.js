@@ -11,8 +11,8 @@ const jsapiTicketModel = require('../../db/models/JsapiTicketModel');
 async function getAccess_token(appId, appSecret) {
   let access_token = '';
   const access_token_data = await accessTokenModel.find();
+  // Check if the access_token already exists in the db.
   if (access_token_data.length > 0) {
-    // Check if the access_token already exists in the db.
     const t = new Date().getTime() - access_token_data[0].token_time;
     if (t > 7000000) {
       // Expires if greater than 7000 seconds.
@@ -20,7 +20,7 @@ async function getAccess_token(appId, appSecret) {
       await loadData();
       // update AccessTokenModel
       let { _id } = access_token_data[0];
-      await accessTokenModel.update(
+      await accessTokenModel.updateOne(
         { _id },
         {
           access_token,
@@ -34,10 +34,18 @@ async function getAccess_token(appId, appSecret) {
     // Reacquire the access_token
     await loadData();
     // create AccessTokenModel
-    await new accessTokenModel({
+    const accessToken = await new accessTokenModel({
       access_token,
       token_time: new Date().getTime(),
-    }).save();
+    });
+    accessToken
+      .save()
+      .then((doc) => {
+        console.log('AccessToken saved:', doc);
+      })
+      .catch((err) => {
+        console.log('Error saving AccessToken:', err);
+      });
   }
 
   /**
@@ -59,12 +67,13 @@ async function getJsapi_ticket(access_token) {
   if (jsapi_ticket_data.length > 0) {
     // Check if the jsapi_ticket already exists in the db.
     const t = new Date().getTime() - jsapi_ticket_data[0].ticket_time;
+    // Expires if greater than 7000 seconds.如果大于7000秒，重新获取
     if (t > 7000000) {
-      // Reacquire the jsapi_ticket
+      // Reacquire the jsapi_ticket.重新获取 jaspi_ticket
       await loadData();
       // update JsapiTicketModel
       let { _id } = jsapi_ticket_data[0];
-      await jsapiTicketModel.update(
+      await jsapiTicketModel.updateOne(
         { _id },
         {
           jsapi_ticket,
@@ -78,14 +87,22 @@ async function getJsapi_ticket(access_token) {
     // Reacquire the jsapi_ticket
     await loadData();
     // create jsapiTicketModel
-    await new jsapiTicketModel({
+    const jsapiTicket = await new jsapiTicketModel({
       jsapi_ticket,
       ticket_time: new Date().getTime(),
-    }).save();
+    });
+    jsapiTicket
+      .save()
+      .then((doc) => {
+        console.log('JsapiTicket saved:', doc);
+      })
+      .catch((err) => {
+        console.log('Error saving JsapiTicket:', err);
+      });
   }
   async function loadData() {
-    const tickeUrl = `https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=${access_token}&type=jsapi`;
-    const ticket_data = await axios(tickeUrl);
+    const ticketUrl = `https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=${access_token}&type=jsapi`;
+    const ticket_data = await axios(ticketUrl);
     jsapi_ticket = ticket_data.data.ticket;
   }
 
