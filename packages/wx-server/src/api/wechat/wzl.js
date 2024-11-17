@@ -1,7 +1,7 @@
 const reply = require('../../utils/wechat/reply');
 const receive = require('../../utils/wechat/receive');
 
-async function wzl(ctx) {
+export default async function wzl(ctx) {
   try {
     const webData = ctx.request.rawBody; // 获取原始请求体
     console.log('Handle Post webdata is ', webData);
