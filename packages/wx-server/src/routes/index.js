@@ -1,5 +1,6 @@
 import Router from 'koa-router';
 import wxk from '../api/wechat/wxk';
+import wzl from '../api/wechat/wzl';
 import signJsapi from '../api/wechat/signJsapi';
 import login from '../api/wxapp/login';
 import banners from '../api/wxapp/banners';
@@ -10,6 +11,9 @@ const router = new Router();
 // enable routing
 // 微信公众号服务器主地址，能够正确响应微信发送的token验证
 router.get('/api/wechat/wxk', wxk);
+
+// 微信公众号服务器主地址，处理粉丝给公众号发送的消息
+router.post('/api/wechat/wxk', wzl);
 
 // 微信鉴证
 router.get('/api/wechat/jsapi', signJsapi);
