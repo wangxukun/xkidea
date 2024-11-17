@@ -1,6 +1,5 @@
-const xml2js = require('xml2js');
-const reply = require('../../utils/wechat/reply');
-const receive = require('../../utils/wechat/receive');
+import { TextMsg } from '../../utils/wechat/reply';
+import { parseXml } from '../../utils/wechat/receive';
 
 async function wzl(ctx) {
   try {
