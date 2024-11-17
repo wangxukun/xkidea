@@ -3,7 +3,7 @@ import { parseXml } from '../../utils/wechat/receive';
 
 async function wzl(ctx) {
   try {
-    const webData = ctx.query;
+    const webData = ctx.request.body; // POST方式获取的数据
     console.log('Handle Post webdata is ', webData);
 
     const recMsg = await parseXml(webData);
