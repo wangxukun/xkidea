@@ -1,6 +1,6 @@
 import Router from 'koa-router';
 import wxk from '../api/wechat/wxk';
-import wzl from '../api/wechat/wzl';
+import { wzl } from '../api/wechat/wzl';
 import signJsapi from '../api/wechat/signJsapi';
 import login from '../api/wxapp/login';
 import banners from '../api/wxapp/banners';
