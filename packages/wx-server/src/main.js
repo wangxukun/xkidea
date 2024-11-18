@@ -4,8 +4,8 @@ import koa from 'koa';
 import cores from 'koa2-cors';
 import serve from 'koa-static';
 import logger from 'koa-logger';
-const xmlParser = require('koa-xml-body').default;
-import bodyParser from 'koa-bodyparser';
+const xmlParser = require('koa-xml-body');
+const bodyParser = require('koa-bodyparser');
 require('dotenv').config();
 import router from './routes';
 
