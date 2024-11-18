@@ -38,7 +38,7 @@ async function parseJson(webData) {
     }
     return null;
   } catch (error) {
-    console.error('Parse XML error:', error);
+    console.error('Parse JSON error:', error);
     return null;
   }
 }

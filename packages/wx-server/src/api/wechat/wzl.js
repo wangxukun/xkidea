@@ -10,7 +10,7 @@ async function wzl(ctx) {
     if (recMsg && recMsg.MsgType === 'text') {
       const toUser = recMsg.FromUserName;
       const fromUser = recMsg.ToUserName;
-      const content = `${recMsg.FromUserName}发送到公众号服务器的数据是：${recMsg.Content}`;
+      const content = '感谢您的关注！';
       const replyMsg = new TextMsg(toUser, fromUser, content);
       ctx.body = replyMsg.send();
     } else {
