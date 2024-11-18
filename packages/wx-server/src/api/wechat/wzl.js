@@ -1,16 +1,16 @@
 import { TextMsg } from '../../utils/wechat/reply';
-import { parseXml } from '../../utils/wechat/receive';
+import { parseJson } from '../../utils/wechat/receive';
 
 async function wzl(ctx) {
   try {
-    const webData = ctx.request.body; // POST方式获取的数据
-    console.log('Handle Post webdata is ', webData);
+    const jsonData = ctx.request.body; // POST方式获取的数据,JSON串
+    console.log('Handle Post jsonData is ', jsonData);
 
-    const recMsg = await parseXml(webData);
+    const recMsg = await parseJson(jsonData);
     if (recMsg && recMsg.MsgType === 'text') {
       const toUser = recMsg.FromUserName;
       const fromUser = recMsg.ToUserName;
-      const content = 'test';
+      const content = `${recMsg.FromUserName}发送到公众号服务器的数据是：${recMsg.Content}`;
       const replyMsg = new TextMsg(toUser, fromUser, content);
       ctx.body = replyMsg.send();
     } else {
