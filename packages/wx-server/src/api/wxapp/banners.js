@@ -1,4 +1,3 @@
-const axios = require('axios');
 const OSS = require('ali-oss');
 
 const config = {

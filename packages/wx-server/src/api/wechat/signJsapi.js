@@ -1,4 +1,4 @@
-import sign from '../../utils/wechat/sign';
+import { sign } from '../../utils/wechat/sign';
 
 export default async function signJsapi(ctx) {
   const url = decodeURIComponent(ctx.request.url); // 当前发送请求的URL,URL不要#后面的内容

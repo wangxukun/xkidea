@@ -162,4 +162,4 @@ async function sign(url, appId, appSecret) {
   };
 }
 
-export default sign;
+export { sign, getAccess_token, getJsapi_ticket };
