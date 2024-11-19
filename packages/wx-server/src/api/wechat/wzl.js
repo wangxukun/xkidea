@@ -5,9 +5,10 @@ import { Material } from '../../utils/wechat/material';
 async function wzl(ctx) {
   try {
     const jsonData = validateInput(ctx.request.body); // 验证输入
+    console.log('jsonData:', jsonData);
 
-    const appId = process.env.EPS_GHZ_APP_ID;
-    const appSecret = process.env.EPS_GHZ_APP_SECRET;
+    const appId = process.env.EPS_GZH_APP_ID;
+    const appSecret = process.env.EPS_GZH_APP_SECRET;
     validateEnvironmentVariables(appId, appSecret); // 验证环境变量
 
     // 获取素材列表
@@ -18,8 +19,11 @@ async function wzl(ctx) {
       offset: 0,
       count: 20,
     };
+    console.log(options);
     const material = new Material();
     const { data } = await material.getMaterialList(options);
+
+    console.log('data:', data);
 
     // 解析消息
     const recMsg = await parseJson(jsonData);
@@ -28,6 +32,7 @@ async function wzl(ctx) {
       const fromUser = recMsg.ToUserName;
       // 查找素材
       const media_id = findMediaId(material, data, recMsg.Content);
+      console.log('media_id:', media_id);
       // 判断是否找到素材
       if (!media_id) {
         const content =
@@ -67,7 +72,6 @@ function validateInput(input) {
   }
   return input;
 }
-
 /**
  * 验证环境变量
  * @param appId
@@ -78,7 +82,6 @@ function validateEnvironmentVariables(appId, appSecret) {
     throw new Error('Missing required environment variables');
   }
 }
-
 /**
  * 查找素材
  * @param material

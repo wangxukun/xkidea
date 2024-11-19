@@ -32,6 +32,7 @@ class Material {
     if (!materialList || !Array.isArray(materialList.item)) {
       return null;
     }
+    console.log('materialList', materialList);
     // 检查 name 是否存在于 range 数组中
     if (!range.includes(name)) return null;
     // 遍历 materialList.item，找到与 name 相等的项
