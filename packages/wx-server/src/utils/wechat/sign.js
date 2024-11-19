@@ -14,6 +14,7 @@ async function getAccess_token(appId, appSecret) {
   // Check if the access_token already exists in the db.
   if (access_token_data.length > 0) {
     const t = new Date().getTime() - access_token_data[0].token_time;
+    console.log('t:', t);
     if (t > 7000000) {
       // Expires if greater than 7000 seconds.
       // Reacquire the access_token

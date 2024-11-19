@@ -10,12 +10,9 @@ class Material {
    * @returns {Promise<axios.AxiosResponse<any>>}
    */
   async getMaterialList(options) {
-    const { type, offset, count } = options;
+    const { type, offset, count, appId, appSecret } = options;
 
-    const access_token = await getAccess_token(
-      options.appId,
-      options.appSecret
-    );
+    const access_token = await getAccess_token(appId, appSecret);
     const materialUrl = `https://api.weixin.qq.com/cgi-bin/material/batchget_material?access_token=${access_token}`;
     return axios.post(materialUrl, { type, offset, count });
   }
