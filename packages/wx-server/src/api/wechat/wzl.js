@@ -1,4 +1,4 @@
-import { TextMsg } from '../../utils/wechat/reply';
+import { TextMsg, ImageMsg } from '../../utils/wechat/reply';
 import { parseJson } from '../../utils/wechat/receive';
 import { Material } from '../../utils/wechat/material';
 
@@ -22,9 +22,48 @@ async function wzl(ctx) {
     if (recMsg && recMsg.MsgType === 'text') {
       const toUser = recMsg.FromUserName;
       const fromUser = recMsg.ToUserName;
-      const content = '感谢您的关注！';
-      const replyMsg = new TextMsg(toUser, fromUser, content);
-      ctx.body = replyMsg.send();
+
+      let replyMsg;
+      switch (recMsg.Content) {
+        case '雅思':
+          replyMsg = new ImageMsg(
+            toUser,
+            fromUser,
+            'S05-G8-3WTrOHeVHi2Pvucc-JRbjal3wkTxmmoiTX0zD8jb0wBCIaWZBkGruoqPD'
+          );
+          ctx.body = replyMsg.send();
+          break;
+        case '高中':
+          replyMsg = new ImageMsg(
+            toUser,
+            fromUser,
+            'S05-G8-3WTrOHeVHi2PvubdeZZ4cOPFyn3-F-5nckR4EB7AjcCnmwQKCnoZGSSfu'
+          );
+          ctx.body = replyMsg.send();
+          break;
+        case '四级':
+          replyMsg = new ImageMsg(
+            toUser,
+            fromUser,
+            'S05-G8-3WTrOHeVHi2PvuYJ3cchx1NvVInOuDq5d418g61V3rvLF7XdpRdhaU_Nd'
+          );
+          ctx.body = replyMsg.send();
+          break;
+        case '六级':
+          replyMsg = new ImageMsg(
+            toUser,
+            fromUser,
+            'S05-G8-3WTrOHeVHi2PvuZVgtGF23JArPcakqOGVLUtkiqaT9Sd3KOx4bXC9e1HJ'
+          );
+          ctx.body = replyMsg.send();
+          break;
+        default:
+          const content =
+            '感谢您的关注！请输入雅思，高中，四级或六级获取对应英语听力训练视频。';
+          replyMsg = new TextMsg(toUser, fromUser, content);
+          ctx.body = replyMsg.send();
+          break;
+      }
     } else {
       console.log('暂且不处理');
       ctx.body = 'success';
