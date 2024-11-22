@@ -5,6 +5,7 @@ import signJsapi from '../api/wechat/signJsapi';
 import login from '../api/wxapp/login';
 import banners from '../api/wxapp/banners';
 import addUser from '../api/addUser';
+import listen from '../api/wxapp/listen';
 
 const router = new Router();
 
@@ -26,5 +27,8 @@ router.post('/api/wxapp/login', login);
 
 // 微信小程序首页：轮播图接口
 router.get('/api/wxapp/banners', banners);
+
+// 微信小程序获取听力数据
+router.get('/api/wxapp/listen', listen);
 
 export default router;
