@@ -1,6 +1,7 @@
 export default function evaluatePronunciation(ctx) {
-  const { audioData, text } = ctx.request.body;
-  console.log(audioData, text);
+  console.log(ctx.request.body);
+  const { audio, text } = ctx.request.body;
+  console.log(audio, text);
   ctx.body = {
     code: 0,
     message: '评测成功',
