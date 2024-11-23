@@ -7,6 +7,7 @@ import banners from '../api/wxapp/banners';
 import addUser from '../api/addUser';
 import listen from '../api/wxapp/listen';
 import leaderboard from '../api/wxapp/leaderboard';
+import evaluatePronunciation from '../api/wxapp/evaluatePronunciation';
 
 const router = new Router();
 
@@ -34,5 +35,8 @@ router.get('/api/wxapp/listen', listen);
 
 // 微信小程序获取排行榜数据
 router.get('/api/wxapp/leaderboard', leaderboard);
+
+// 评估发音
+router.post('/api/wxapp/evaluate-pronunciation', evaluatePronunciation);
 
 export default router;
