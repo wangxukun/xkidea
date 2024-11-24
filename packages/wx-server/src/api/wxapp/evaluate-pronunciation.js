@@ -66,10 +66,12 @@ export default async function evaluatePronunciation(ctx) {
     });
 
     // 返回测评结果
+    const result = response.data;
+    console.log('Evaluation Result:', result);
     const { score, message } = response.data;
     ctx.body = {
       code: 0,
-      message: '获取语音评测结果',
+      message,
       data: {
         score,
         feedback: message || 'Evaluation complete',
