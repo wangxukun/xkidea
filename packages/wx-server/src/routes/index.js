@@ -7,7 +7,7 @@ import banners from '../api/wxapp/banners';
 import addUser from '../api/addUser';
 import listen from '../api/wxapp/listen';
 import leaderboard from '../api/wxapp/leaderboard';
-import evaluatePronunciation from '../api/wxapp/evaluatePronunciation';
+import evaluatePronunciation from '../api/wxapp/evaluate-pronunciation';
 
 const router = new Router();
 
