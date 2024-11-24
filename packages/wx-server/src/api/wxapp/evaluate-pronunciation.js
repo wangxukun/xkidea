@@ -70,21 +70,21 @@ export default async function evaluatePronunciation(ctx) {
 
     // 提取句子级别评分
     const sentenceEvaluation = {
-      overall: evaluateResult.overall,
-      pronunciation: evaluateResult.pronunciation,
-      fluency: evaluateResult.fluency,
-      speed: evaluateResult.speed.toFixed(2), // 保留两位小数
-      integrity: evaluateResult.integrity,
+      overall: evaluateResult.overall.toFixed(1),
+      pronunciation: evaluateResult.pronunciation.toFixed(1),
+      fluency: evaluateResult.fluency.toFixed(1),
+      speed: evaluateResult.speed.toFixed(1), // 保留一位小数
+      integrity: evaluateResult.integrity.toFixed(1),
     };
 
     // 提取单词信息
     const wordsEvaluation = evaluateResult.words.map((word) => ({
       word: word.word,
-      pronunciation: word.pronunciation.toFixed(2), // 单词发音准确度
+      pronunciation: word.pronunciation.toFixed(1), // 单词发音准确度
       IPA: word.IPA, // 音标
       phonemes: word.phonemes.map((phoneme) => ({
         phoneme: phoneme.phoneme,
-        pronunciation: phoneme.pronunciation.toFixed(2),
+        pronunciation: phoneme.pronunciation.toFixed(1),
         judge: phoneme.judge,
       })),
     }));

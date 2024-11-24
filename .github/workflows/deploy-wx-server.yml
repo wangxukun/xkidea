@@ -24,12 +24,6 @@ jobs:
           npm install -g nx  # 全局安装 Nx CLI
           npm install  # 安装项目依赖
 
-      - name: Build wx-client (React project)
-        run: |
-          nx build wx-client  # 使用 Nx 构建 React 项目
-        env:
-          NODE_ENV: production # 设置环境变量为生产环境
-
       - name: Build wx-server (Koa project)
         run: |
           nx build wx-server  # 使用 Nx 构建 Koa 项目
