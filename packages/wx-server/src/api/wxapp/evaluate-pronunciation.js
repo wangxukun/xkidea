@@ -67,10 +67,35 @@ export default async function evaluatePronunciation(ctx) {
 
     // 返回测评结果
     const evaluateResult = response.data;
+
+    // 提取句子级别评分
+    const sentenceEvaluation = {
+      overall: evaluateResult.overall,
+      pronunciation: evaluateResult.pronunciation,
+      fluency: evaluateResult.fluency,
+      speed: evaluateResult.speed.toFixed(2), // 保留两位小数
+      integrity: evaluateResult.integrity,
+    };
+
+    // 提取单词信息
+    const wordsEvaluation = evaluateResult.words.map((word) => ({
+      word: word.word,
+      pronunciation: word.pronunciation.toFixed(2), // 单词发音准确度
+      IPA: word.IPA, // 音标
+      phonemes: word.phonemes.map((phoneme) => ({
+        phoneme: phoneme.phoneme,
+        pronunciation: phoneme.pronunciation.toFixed(2),
+        judge: phoneme.judge,
+      })),
+    }));
+
     ctx.body = {
       code: 0,
       message: '获取语音评测',
-      data: evaluateResult,
+      data: {
+        sentenceEvaluation,
+        wordsEvaluation,
+      },
     };
   } catch (error) {
     console.error('Error evaluating pronunciation:', error);

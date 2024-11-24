@@ -44,3 +44,6 @@ Thumbs.db
 .env
 
 technical_documentation/*
+
+# GitHub
+/.github/workflows/deploy-all.yml

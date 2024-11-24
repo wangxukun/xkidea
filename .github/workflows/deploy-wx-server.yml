@@ -40,24 +40,9 @@ jobs:
       - name: copy the MP_verify
         run: nx run wx-server:copy-public
 
-      # 6. 压缩wx-client项目文件以便传输到服务器
-      - name: Compress project files
-        run: zip -r wx-client.zip dist/packages/wx-client/*
-
       # 6. 压缩wx-server项目文件以便传输到服务器
       - name: Compress project files
         run: zip -r wx-server.zip dist/packages/wx-server/*
-
-      # 7. 通过 SSH 将wx-client项目文件上传到阿里云 ECS 服务器
-      - name: Upload project to ECS
-        uses: appleboy/scp-action@v0.1.4
-        with:
-          host: ${{ secrets.WXKZD_ECS_HOST}} # 阿里云 ECS 服务器的 IP 地址
-          username: ${{ secrets.WXKZD_SSH_USERNAME }} # SSH 登录用户名
-          key: ${{ secrets.WXKZD_SSH_PRIVATE_KEY }} # 私钥，用于 SSH 登录
-          port: 22
-          source: 'wx-client.zip'
-          target: '/var/www' # 目标目录
 
       # 7. 通过 SSH 将wx-server项目文件上传到阿里云 ECS 服务器
       - name: Upload project to ECS
@@ -79,18 +64,6 @@ jobs:
           key: ${{ secrets.WXKZD_SSH_PRIVATE_KEY }}
           port: 22
           script: |
-            # 处理wx-client.zip文件
-            # 清除旧代码
-            rm -rf /var/www/wx-client/*
-            cd /var/www
-            unzip wx-client.zip -d wx-client
-            mv wx-client/dist/packages/wx-client/* wx-client/
-            rm -rf wx-client/dist
-            rm wx-client.zip
-            # 设置nginx用户有权限
-            chown -R nginx:nginx /var/www/wx-client 
-            chmod -R 755 /var/www/wx-client
-
             # 处理wx-server.zip文件
             # 清除旧代码
             rm -rf /var/www/wx-server/*
