@@ -5,9 +5,12 @@ import signJsapi from '../api/wechat/signJsapi';
 import login from '../api/wxapp/login';
 import banners from '../api/wxapp/banners';
 import addUser from '../api/addUser';
+// import insertMockQuestions from '../api/wxapp/insertMockQuestions';
 import listen from '../api/wxapp/listen';
 import leaderboard from '../api/wxapp/leaderboard';
 import evaluatePronunciation from '../api/wxapp/evaluate-pronunciation';
+import getPracticeData from '../api/wxapp/get-practice-data';
+import updatePracticeRecord from '../api/wxapp/update-practice-record';
 
 const router = new Router();
 
@@ -24,6 +27,9 @@ router.get('/api/wechat/jsapi', signJsapi);
 // 增加微信公众号或微信小程序用户到数据库
 router.post('/api/addUser', addUser);
 
+// 模拟数据
+// router.get('/api/wxapp/insertMockQuestions', insertMockQuestions);
+
 // 微信小程序用户登录接口
 router.post('/api/wxapp/login', login);
 
@@ -38,5 +44,11 @@ router.get('/api/wxapp/leaderboard', leaderboard);
 
 // 评估发音
 router.post('/api/wxapp/evaluate-pronunciation', evaluatePronunciation);
+
+// 获取练习数据
+router.get('/api/wxapp/get-practice-data', getPracticeData);
+
+// 提交练习记录
+router.post('/api/wxapp/update-practice-record', updatePracticeRecord);
 
 export default router;

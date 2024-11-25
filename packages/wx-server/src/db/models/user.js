@@ -6,7 +6,6 @@ const userSchema = new mongoose.Schema({
   // 用户在开发平台的唯一标识符，必须，且需唯一，若当前小程序已绑定到微信开放平台账号下会返回
   unionid: {
     type: String,
-    required: true,
     unique: true,
   },
   // 用户的唯一标识符，必须，且需唯一
@@ -41,6 +40,8 @@ const userSchema = new mongoose.Schema({
     speakCount: { type: Number, default: 0 },
     // 阅读练习次数，默认为 0
     readCount: { type: Number, default: 0 },
+
+    lastPracticeQuestionId: { type: mongoose.Schema.Types.ObjectId },
   },
   // 创建日期，默认为当前日期
   createdAt: {
@@ -50,7 +51,7 @@ const userSchema = new mongoose.Schema({
 });
 
 // 更新学习统计的方法
-userSchema.methods.updateStudyStats = async function (type) {
+userSchema.methods.updateStudyStats = async function (type, questionId) {
   // 获取当前日期（不含时间）
   const today = new Date().setHours(0, 0, 0, 0);
   // 获取最后学习日期（不含时间）
@@ -84,8 +85,11 @@ userSchema.methods.updateStudyStats = async function (type) {
       break;
   }
 
-  // 更新最后学习日期为当前时间
+  // 更新最后学习日期为当前时间和最后练习的题目ID
   this.studyStats.lastStudyDate = new Date();
+  if (questionId) {
+    this.studyStats.lastPracticeQuestionId = questionId;
+  }
   return this.save(); // 保存更改
 };
 

@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 
-// EPS_GZH_APP_DATABASE_URL=mongodb://epsUser:wxkwzl-2025@8.141.1.191:27017/eps
 const uri = `mongodb://${process.env.EPS_GZH_APP_DB_USER}:${process.env.EPS_GZH_APP_DB_PSW}@${process.env.EPS_GZH_APP_DB_IP}:${process.env.EPS_GZH_APP_DB_PORT}/${process.env.EPS_GZH_APP_DB_NAME}`;
 console.log(uri);
 db()
