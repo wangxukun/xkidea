@@ -9,7 +9,7 @@ import addUser from '../api/addUser';
 import listen from '../api/wxapp/listen';
 import leaderboard from '../api/wxapp/leaderboard';
 import evaluatePronunciation from '../api/wxapp/evaluate-pronunciation';
-import getPracticeData from '../api/wxapp/get-practice-data';
+import getPronunciationEvaluationData from '../api/wxapp/get-pronunciation-evaluation-data';
 import updatePracticeRecord from '../api/wxapp/update-practice-record';
 
 const router = new Router();
@@ -45,8 +45,11 @@ router.get('/api/wxapp/leaderboard', leaderboard);
 // 评估发音
 router.post('/api/wxapp/evaluate-pronunciation', evaluatePronunciation);
 
-// 获取练习数据
-router.get('/api/wxapp/get-practice-data', getPracticeData);
+// 获取用于发音评估的数据
+router.get(
+  '/api/wxapp/get-pronunciation-evaluation-data',
+  getPronunciationEvaluationData
+);
 
 // 提交练习记录
 router.post('/api/wxapp/update-practice-record', updatePracticeRecord);
