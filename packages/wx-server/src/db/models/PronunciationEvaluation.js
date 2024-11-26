@@ -7,7 +7,8 @@ const mongoose = require('mongoose');
 // 定义 Schema
 const pronunciationEvaluationSchema = new mongoose.Schema(
   {
-    text: { type: String, required: true }, // 题目文本
+    englishText: { type: String, required: true }, // 题目文本
+    chineseText: { type: String, required: true }, // 题目中文翻译文本
     audioUrl: { type: String, required: true }, // 演示音频链接
     topic: { type: String, required: true }, // 所属主题
   },

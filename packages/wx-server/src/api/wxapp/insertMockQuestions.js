@@ -7,27 +7,32 @@ export default async function insertMockQuestions() {
     const questions = [
       {
         topic: 'Greetings',
-        text: 'Have a good day',
+        englishText: 'Have a good day',
+        chineseText: '祝你有美好的一天',
         audioUrl: 'https://www.wxkzd.com/audios/audio1.mp3',
       },
       {
         topic: 'Greetings',
-        text: 'How are you doing?',
+        englishText: 'How are you doing?',
+        chineseText: '你好吗？',
         audioUrl: 'https://www.wxkzd.com/audios/audio1.mp3',
       },
       {
         topic: 'Greetings',
-        text: 'This is a practice sentence',
+        englishText: 'This is a practice sentence',
+        chineseText: '这个是练习句',
         audioUrl: 'https://www.wxkzd.com/audios/audio1.mp3',
       },
       {
         topic: 'Second',
-        text: 'Can you repeat that?',
+        englishText: 'Can you repeat that?',
+        chineseText: '你能重复一遍吗？',
         audioUrl: 'https://www.wxkzd.com/audios/audio1.mp3',
       },
       {
         topic: 'Second',
-        text: 'What is your name?',
+        englishText: 'What is your name?',
+        chineseText: '你的名字是什么？',
         audioUrl: 'https://www.wxkzd.com/audios/audio1.mp3',
       },
     ];
