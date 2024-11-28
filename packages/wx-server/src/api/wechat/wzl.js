@@ -4,7 +4,6 @@ import { Material } from '../../utils/wechat/material';
 
 async function wzl(ctx) {
   try {
-    console.log('ctx.request.body:', ctx.request.body);
     const jsonData = validateInput(ctx.request.body); // 验证输入
     console.log('jsonData:', jsonData);
 
