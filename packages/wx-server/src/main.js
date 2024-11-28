@@ -4,7 +4,7 @@ import koa from 'koa';
 import cores from 'koa2-cors';
 import serve from 'koa-static';
 import logger from 'koa-logger';
-import koaBody from 'koa-body';
+// import koaBody from 'koa-body';
 const xmlParser = require('koa-xml-body');
 const bodyParser = require('koa-bodyparser');
 require('dotenv').config();
@@ -30,11 +30,11 @@ const options = {
 const app = new koa();
 
 // enable koa-body middleware
-app.use(
-  koaBody({
-    multipart: true, // 支持文件上传
-  })
-);
+// app.use(
+//   koaBody({
+//     multipart: true, // 支持文件上传
+//   })
+// );
 
 // enable logger
 app.use(logger());
