@@ -20,7 +20,7 @@ const router = new Router();
 router.get('/api/wechat/wxk', wxk);
 
 // 微信公众号服务器主地址，处理粉丝给公众号发送的消息
-router.post('/api/wechat/wxk', xmlParser(), wzl);
+router.post('/api/wechat/wxk', wzl);
 
 // 微信鉴证
 router.get('/api/wechat/jsapi', signJsapi);

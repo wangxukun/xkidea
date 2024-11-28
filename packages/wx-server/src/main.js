@@ -29,15 +29,16 @@ const options = {
 // initial
 const app = new koa();
 
-// ean xmlParser
-app.use(xmlParser());
-
 // enable koa-body middleware
 app.use(
   koaBody({
     multipart: true, // 支持文件上传
+    text: false, // 不解析文本请求
   })
 );
+
+// ean xmlParser
+app.use(xmlParser());
 
 // enable logger
 app.use(logger());
