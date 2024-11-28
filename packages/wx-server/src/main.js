@@ -29,6 +29,9 @@ const options = {
 // initial
 const app = new koa();
 
+// ean xmlParser
+app.use(xmlParser());
+
 // enable koa-body middleware
 app.use(
   koaBody({
@@ -38,9 +41,6 @@ app.use(
 
 // enable logger
 app.use(logger());
-
-// ean xmlParser
-app.use(xmlParser());
 
 // enable bodyParser
 app.use(bodyParser());
