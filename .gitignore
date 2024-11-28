@@ -46,4 +46,5 @@ Thumbs.db
 technical_documentation/*
 
 # GitHub
-/.github/workflows/deploy-all.yml
+#/.github/workflows/deploy-all.yml
+/.github/workflows/deploy-wx-server.yml

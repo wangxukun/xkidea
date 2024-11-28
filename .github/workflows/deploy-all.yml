@@ -1,0 +1,121 @@
+name: Deploy to Alibaba Cloud ECS
+
+on:
+  # 触发条件：在 main 分支上有 push 操作时触发
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest # 在最新的 Ubuntu 虚拟机环境上运行
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3 # 检出仓库代码到工作空间
+
+      - name: Install Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20' # 安装 Node.js 版本 20
+
+      - name: Install Dependencies
+        run: |
+          npm install -g nx  # 全局安装 Nx CLI
+          npm install  # 安装项目依赖
+
+      - name: Build wx-client (React project)
+        run: |
+          nx build wx-client  # 使用 Nx 构建 React 项目
+        env:
+          NODE_ENV: production # 设置环境变量为生产环境
+
+      - name: Build wx-server (Koa project)
+        run: |
+          nx build wx-server  # 使用 Nx 构建 Koa 项目
+        env:
+          NODE_ENV: production # 设置环境变量为生产环境
+
+      # 5.2 复制安全域名MP_verify到构建好的代码目录下
+      - name: copy the MP_verify
+        run: nx run wx-server:copy-public
+
+      # 6. 压缩wx-client项目文件以便传输到服务器
+      - name: Compress project files
+        run: zip -r wx-client.zip dist/packages/wx-client/*
+
+      # 6. 压缩wx-server项目文件以便传输到服务器
+      - name: Compress project files
+        run: zip -r wx-server.zip dist/packages/wx-server/*
+
+      # 7. 通过 SSH 将wx-client项目文件上传到阿里云 ECS 服务器
+      - name: Upload project to ECS
+        uses: appleboy/scp-action@v0.1.4
+        with:
+          host: ${{ secrets.WXKZD_ECS_HOST}} # 阿里云 ECS 服务器的 IP 地址
+          username: ${{ secrets.WXKZD_SSH_USERNAME }} # SSH 登录用户名
+          key: ${{ secrets.WXKZD_SSH_PRIVATE_KEY }} # 私钥，用于 SSH 登录
+          port: 22
+          source: 'wx-client.zip'
+          target: '/var/www' # 目标目录
+
+      # 7. 通过 SSH 将wx-server项目文件上传到阿里云 ECS 服务器
+      - name: Upload project to ECS
+        uses: appleboy/scp-action@v0.1.4
+        with:
+          host: ${{ secrets.WXKZD_ECS_HOST}} # 阿里云 ECS 服务器的 IP 地址
+          username: ${{ secrets.WXKZD_SSH_USERNAME }} # SSH 登录用户名
+          key: ${{ secrets.WXKZD_SSH_PRIVATE_KEY }} # 私钥，用于 SSH 登录
+          port: 22
+          source: 'wx-server.zip'
+          target: '/var/www' # 目标目录
+
+      # 8. 通过 SSH 登录到 ECS 服务器解压文件
+      - name: SSH and deploy
+        uses: appleboy/ssh-action@v0.1.4
+        with:
+          host: ${{ secrets.WXKZD_ECS_HOST }}
+          username: ${{ secrets.WXKZD_SSH_USERNAME }}
+          key: ${{ secrets.WXKZD_SSH_PRIVATE_KEY }}
+          port: 22
+          script: |
+            # 处理wx-client.zip文件
+            # 清除旧代码
+            rm -rf /var/www/wx-client/*
+            cd /var/www
+            unzip wx-client.zip -d wx-client
+            mv wx-client/dist/packages/wx-client/* wx-client/
+            rm -rf wx-client/dist
+            rm wx-client.zip
+            # 设置nginx用户有权限
+            chown -R nginx:nginx /var/www/wx-client 
+            chmod -R 755 /var/www/wx-client
+
+            # 处理wx-server.zip文件
+            # 清除旧代码
+            rm -rf /var/www/wx-server/*
+            cd /var/www
+            unzip wx-server.zip -d wx-server
+            mv wx-server/dist/packages/wx-server/* wx-server/
+            rm -rf wx-server/dist
+            rm wx-server.zip
+
+      # 9. 安装依赖和启动服务器（只启动wx-server服务器，wx-client是静态的不用安装，直接在nginx中配置）
+      - name: Install dependencies on ECS
+        uses: appleboy/ssh-action@v0.1.4
+        with:
+          host: ${{ secrets.WXKZD_ECS_HOST }}
+          username: ${{ secrets.WXKZD_SSH_USERNAME }}
+          key: ${{ secrets.WXKZD_SSH_PRIVATE_KEY }}
+          port: 22
+          script: |
+            # 安装依赖
+            cd /var/www/wx-server
+            npm install
+            # 启动或重启应用
+            pm2 startOrReload ../conf/ecosystem.config.js
+
+      # 处理异常和错误的工作流步骤
+      - name: Handle errors
+        if: failure()
+        run: echo "Deployment failed. Check logs and try again."
