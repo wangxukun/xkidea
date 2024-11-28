@@ -49,7 +49,7 @@ async function wzl(ctx) {
       ctx.body = 'success';
     }
   } catch (error) {
-    console.error(`Error in wzl function: ${error.start}`);
+    console.error(`Error in wzl function: ${error}`);
     if (error instanceof SyntaxError) {
       ctx.body = 'Invalid JSON data';
     } else if (
@@ -69,6 +69,7 @@ async function wzl(ctx) {
  */
 function validateInput(input) {
   if (typeof input !== 'object' || input === null) {
+    console.error('Invalid input:', input);
     throw new Error('Invalid JSON data');
   }
   return input;
